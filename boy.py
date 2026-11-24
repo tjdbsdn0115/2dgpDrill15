@@ -188,6 +188,8 @@ class Boy:
     def draw(self):
         self.states[self.state].draw(self)
         self.font.draw(self.x - 10, self.y + 50, f'{self.ball_count:02d}', (255, 255, 0))
+        if self.is_game_over:
+            self.font.draw(700, 500, 'GAME OVER', (255,0,0))
         draw_rectangle(*self.get_bb())
 
     # 소년의 충돌 영역을 계산하여 BOUNDING BOX를 리턴
