@@ -108,6 +108,7 @@ class Boy:
         self.pressed_keys = set()
         self.item = 'Ball'
         self.ball_count = 10  # 가지고 있는 공의 개수
+        self.is_game_over = False
 
         self.states = {'IDLE': Idle(), 'SLEEP': Sleep(), 'RUN': Run()}
 
@@ -152,6 +153,9 @@ class Boy:
             self.stop_run()
 
     def handle_event(self, event):
+        if self.is_game_over:
+            return
+        
         if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
             self.states[self.state].space(self)
             return
@@ -177,6 +181,8 @@ class Boy:
             self.stop_run()
 
     def update(self):
+        if self.is_game_over:
+            return
         self.states[self.state].do(self)
 
     def draw(self):
@@ -194,3 +200,9 @@ class Boy:
             # 소년이 공과 충돌했을 떄의 처리
             self.ball_count += 1
             game_world.remove_object(other)
+        elif group == 'boy:zombie' and not self.is_game_over:
+            self.is_game_over = True
+            self.pressed_keys.clear()
+            self.dir = 0
+            if self.state == 'RUN':
+                self.stop_run()
