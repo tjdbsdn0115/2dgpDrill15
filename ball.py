@@ -51,3 +51,5 @@ class Ball:
         if group == 'boy:ball':
             # 공이 소년과 충돌했을 때의 처리
             game_world.remove_object(self)
+        elif group == 'ball:zombie'and not self.stopped:
+            game_world.remove_object(self)
