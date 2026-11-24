@@ -61,6 +61,8 @@ def finish():
 
 
 def update():
+    if boy.is_game_over:
+        return
     game_world.update()
     game_world.handle_collision()  # 충돌 체크 및 콜백 호출
 
